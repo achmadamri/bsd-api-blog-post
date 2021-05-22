@@ -36,7 +36,7 @@ public class ApplicationConfig {
 	}
 
 	private ApiInfo getApiInfo() {
-		String appName = "MT Member API";
+		String appName = "eblo-api-psm-member";
 		
 		return new ApiInfo(appName, appName, "1.0", "",
 				new Contact(appName, appName, "EMAIL"), "LICENSE", "LICENSE URL",
