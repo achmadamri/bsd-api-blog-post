@@ -8,11 +8,11 @@
 		<version>2.2.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.api.mt.member</groupId>
-	<artifactId>api-mt-member</artifactId>
+	<groupId>com.eblo.api.psm.member</groupId>
+	<artifactId>eblo-api-psm-member</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api-mt-member</name>
-	<description>Demo project for Spring Boot</description>
+	<name>eblo-api-psm-member</name>
+	<description>eblo-api-psm-member</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -38,7 +38,6 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.49</version>
 		</dependency>
 
 		<dependency>
@@ -80,7 +79,6 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>2.3.1</version>
 		</dependency>
 		
 		<dependency>
@@ -98,12 +96,6 @@
 		  <groupId>commons-io</groupId>
 		  <artifactId>commons-io</artifactId>
 		  <version>2.6</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>4.1.2</version>
 		</dependency>
 	</dependencies>
 
