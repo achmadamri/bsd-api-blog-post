@@ -25,7 +25,7 @@ public class TokenService {
 		
 		TbUser exampleTbUser = new TbUser();
 		exampleTbUser.setTbuEmail(requestModel.getEmail());
-		exampleTbUser.setTbuStatus(TbUser.StatusActive);
+		exampleTbUser.setTbuStatus(TbUserRepository.Active);
 		Optional<TbUser> optTbUser = tbUserRepository.findOne(Example.of(exampleTbUser));
 		
 		optTbUser.ifPresentOrElse(tbUser -> {

@@ -22,11 +22,6 @@ import javax.persistence.Table;
 public class TbUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public final static String StatusCreated = "created";
-	public final static String StatusNeedConfirmation = "need confirmation";
-	public final static String StatusActive = "active";
-	public final static String StatusNonActive = "non active";
-
 	@Id
 	@Column(name="tbu_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
