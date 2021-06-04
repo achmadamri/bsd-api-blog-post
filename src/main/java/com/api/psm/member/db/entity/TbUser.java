@@ -39,12 +39,6 @@ public class TbUser implements Serializable {
 	@Column(name="tbu_update_id")
 	private Integer tbuUpdateId;
 
-	@Column(name="tbu_member_id")
-	private String tbuMemberId;
-
-	@Column(name="tbu_id_login")
-	private String tbuIdLogin;
-
 	@Column(name="tbu_email")
 	private String tbuEmail;
 
@@ -116,22 +110,6 @@ public class TbUser implements Serializable {
 
 	public void setTbuUpdateId(Integer tbuUpdateId) {
 		this.tbuUpdateId = tbuUpdateId;
-	}
-
-	public String getTbuMemberId() {
-		return tbuMemberId;
-	}
-
-	public void setTbuMemberId(String tbuMemberId) {
-		this.tbuMemberId = tbuMemberId;
-	}
-
-	public String getTbuIdLogin() {
-		return tbuIdLogin;
-	}
-
-	public void setTbuIdLogin(String tbuIdLogin) {
-		this.tbuIdLogin = tbuIdLogin;
 	}
 
 	public String getTbuEmail() {
