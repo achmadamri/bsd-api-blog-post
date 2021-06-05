@@ -28,8 +28,6 @@ CREATE TABLE `tb_user` (
   `tbu_create_id` int(11) DEFAULT NULL,
   `tbu_update_date` datetime DEFAULT NULL,
   `tbu_update_id` int(11) DEFAULT NULL,
-  `tbu_member_id` varchar(100) DEFAULT NULL,
-  `tbu_id_login` varchar(255) DEFAULT NULL,
   `tbu_email` varchar(255) DEFAULT NULL,
   `tbu_password` varchar(32) DEFAULT NULL,
   `tbu_firstname` varchar(100) DEFAULT NULL,
@@ -54,7 +52,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2020-07-30 10:20:33',0,'999991','999991','achmad.amri@gmail.com','202cb962ac59075b964b07152d234b70','Achmad','Amri','08158800230','Palembang','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','jnsr8q8t7dzgqv8qqmkfsffc5mqdn5fec4af');
+INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2020-07-30 10:20:33',0,'achmad.amri@gmail.com','202cb962ac59075b964b07152d234b70','Achmad','Amri','08158800230','Palembang','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','jnsr8q8t7dzgqv8qqmkfsffc5mqdn5fec4af');
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -67,4 +65,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-02 15:57:20
+-- Dump completed on 2021-06-05 15:00:46
