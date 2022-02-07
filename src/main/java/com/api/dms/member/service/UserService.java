@@ -218,6 +218,7 @@ public class UserService {
 				tbUser.setTbuCreateId(optTbUser.get().getTbuId());
 				tbUser.setTbuStatus(TbUserRepository.Active);
 				tbUser.setTbuTokenSalt(new Uid().generateString(36));
+				tbUser.setTbuRole(requestModel.getTbUser().getTbuRole());
 				tbUserRepository.save(tbUser);
 				
 				for (ViewUserMenu viewUserMenu : requestModel.getLstViewUserMenu()) {
@@ -246,13 +247,15 @@ public class UserService {
 				
 				RestTemplate restTemplate = new RestTemplate();
 				
-				PostAddRequestModel postAddRequestModel = new PostAddRequestModel();
+				PostAddRequestModel postAddRequestModel = new PostAddRequestModel();				
 				postAddRequestModel.setEmail(requestModel.getEmail());
 				postAddRequestModel.setToken(requestModel.getToken());
 				postAddRequestModel.setTbaEmail(tbUser.getTbuEmail());
+				postAddRequestModel.setTbaRole(tbUser.getTbuRole());
 				postAddRequestModel.setTbaPassword(tbUser.getTbuPassword());
 				postAddRequestModel.setTbaStatus(tbUser.getTbuStatus());
 				postAddRequestModel.setTbaTokenSalt(tbUser.getTbuTokenSalt());
+				postAddRequestModel.setTbaRole(tbUser.getTbuRole());
 				HttpEntity<PostAddRequestModel> requestPostAdd = new HttpEntity<>(postAddRequestModel);
 				restTemplate.postForEntity(env.getProperty("eblo-api-psm-auth") + "auth/postadd", requestPostAdd, String.class);
 				
@@ -342,8 +345,9 @@ public class UserService {
 			Optional<TbUser> optTbUserExisting = tbUserRepository.findOne(Example.of(exampleTbUserExisting));
 			
 			if (optTbUserExisting.isPresent()) {
+				optTbUserExisting.get().setTbuRole(requestModel.getTbUser().getTbuRole());
 				optTbUserExisting.get().setTbuFirstname(requestModel.getTbUser().getTbuFirstname());
-				optTbUserExisting.get().setTbuLastname(requestModel.getTbUser().getTbuLastname());
+				optTbUserExisting.get().setTbuLastname(requestModel.getTbUser().getTbuLastname());				
 				
 				if (!requestModel.getTbUser().getTbuPassword().equals("")) {
 					optTbUserExisting.get().setTbuPassword(new MD5().get(requestModel.getTbUser().getTbuPassword()));	
@@ -389,6 +393,7 @@ public class UserService {
 				
 				if (!requestModel.getTbUser().getTbuPassword().equals("")) {
 					PutUpdateRequestModel putUpdateRequestModel = new PutUpdateRequestModel();
+					putUpdateRequestModel.setTbaRole(optTbUserExisting.get().getTbuRole());
 					putUpdateRequestModel.setTbaEmail(optTbUserExisting.get().getTbuEmail());
 					putUpdateRequestModel.setTbaPassword(optTbUserExisting.get().getTbuPassword());
 					putUpdateRequestModel.setTbaStatus(optTbUserExisting.get().getTbuStatus());

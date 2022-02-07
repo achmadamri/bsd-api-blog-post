@@ -5,7 +5,7 @@ import java.util.List;
 import com.api.dms.member.model.RequestModel;
 
 public class PostUserAddRequestModel extends RequestModel {
-private TbUser tbUser;
+	private TbUser tbUser;
 	
 	private List<TbUserBrand> lstTbUserBrand;
 

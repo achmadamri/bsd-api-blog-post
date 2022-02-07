@@ -10,6 +10,8 @@ public class PutUpdateRequestModel extends RequestModel {
 	private String newPassword;
 
 	private String tbaStatus;
+	
+	private String tbaRole;
 
 	public String getTbaEmail() {
 		return tbaEmail;
@@ -41,5 +43,13 @@ public class PutUpdateRequestModel extends RequestModel {
 
 	public void setTbaStatus(String tbaStatus) {
 		this.tbaStatus = tbaStatus;
+	}
+
+	public String getTbaRole() {
+		return tbaRole;
+	}
+
+	public void setTbaRole(String tbaRole) {
+		this.tbaRole = tbaRole;
 	}
 }

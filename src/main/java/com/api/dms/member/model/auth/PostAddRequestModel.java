@@ -10,6 +10,8 @@ public class PostAddRequestModel extends RequestModel {
 	private String tbaStatus;
 
 	private String tbaTokenSalt;
+	
+	private String tbaRole;
 
 	public String getTbaEmail() {
 		return tbaEmail;
@@ -41,5 +43,13 @@ public class PostAddRequestModel extends RequestModel {
 
 	public void setTbaTokenSalt(String tbaTokenSalt) {
 		this.tbaTokenSalt = tbaTokenSalt;
+	}
+
+	public String getTbaRole() {
+		return tbaRole;
+	}
+
+	public void setTbaRole(String tbaRole) {
+		this.tbaRole = tbaRole;
 	}
 }

@@ -38,6 +38,8 @@ public class TbUser implements Serializable {
 	private Date tbuUpdateDate;
 
 	private Integer tbuUpdateId;
+	
+	private String tbuRole;
 
 	public TbUser() {
 	}
@@ -168,6 +170,14 @@ public class TbUser implements Serializable {
 
 	public void setTbuUpdateId(Integer tbuUpdateId) {
 		this.tbuUpdateId = tbuUpdateId;
+	}
+
+	public String getTbuRole() {
+		return tbuRole;
+	}
+
+	public void setTbuRole(String tbuRole) {
+		this.tbuRole = tbuRole;
 	}
 
 }
