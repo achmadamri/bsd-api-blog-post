@@ -257,7 +257,7 @@ public class UserService {
 				postAddRequestModel.setTbaTokenSalt(tbUser.getTbuTokenSalt());
 				postAddRequestModel.setTbaRole(tbUser.getTbuRole());
 				HttpEntity<PostAddRequestModel> requestPostAdd = new HttpEntity<>(postAddRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-auth") + "auth/postadd", requestPostAdd, String.class);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.auth") + "auth/postadd", requestPostAdd, String.class);
 				
 				SimpleMapper simpleMapper = new SimpleMapper();
 				
@@ -278,7 +278,7 @@ public class UserService {
 				}
 				postUserAddOrderRequestModel.setLstTbUserBrand(lstOrderTbUserBrand);
 				HttpEntity<com.api.dms.member.model.order.PostUserAddRequestModel> requestPostUserAddOrder = new HttpEntity<>(postUserAddOrderRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-order") + "user/postuseradd", requestPostUserAddOrder, String.class);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.order") + "user/postuseradd", requestPostUserAddOrder, String.class);
 				
 				com.api.dms.member.model.product.PostUserAddRequestModel postUserAddProductRequestModel = new com.api.dms.member.model.product.PostUserAddRequestModel();
 				postUserAddProductRequestModel.setEmail(requestModel.getEmail());
@@ -297,7 +297,7 @@ public class UserService {
 				}
 				postUserAddProductRequestModel.setLstTbUserBrand(lstProductTbUserBrand);
 				HttpEntity<com.api.dms.member.model.product.PostUserAddRequestModel> requestPostUserAddProduct = new HttpEntity<>(postUserAddProductRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-product") + "user/postuseradd", requestPostUserAddProduct, String.class);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.product") + "user/postuseradd", requestPostUserAddProduct, String.class);
 				
 				com.api.dms.member.model.report.PostUserAddRequestModel postUserAddReportRequestModel = new com.api.dms.member.model.report.PostUserAddRequestModel();
 				postUserAddReportRequestModel.setEmail(requestModel.getEmail());
@@ -316,7 +316,7 @@ public class UserService {
 				}
 				postUserAddReportRequestModel.setLstTbUserBrand(lstReportTbUserBrand);
 				HttpEntity<com.api.dms.member.model.report.PostUserAddRequestModel> requestPostUserAddReport = new HttpEntity<>(postUserAddReportRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-report") + "user/postuseradd", requestPostUserAddReport, String.class);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.report") + "user/postuseradd", requestPostUserAddReport, String.class);
 			}
 			
 			responseModel.setStatus("200");
@@ -391,15 +391,13 @@ public class UserService {
 				
 				RestTemplate restTemplate = new RestTemplate();
 				
-				if (!requestModel.getTbUser().getTbuPassword().equals("")) {
-					PutUpdateRequestModel putUpdateRequestModel = new PutUpdateRequestModel();
-					putUpdateRequestModel.setTbaRole(optTbUserExisting.get().getTbuRole());
-					putUpdateRequestModel.setTbaEmail(optTbUserExisting.get().getTbuEmail());
-					putUpdateRequestModel.setTbaPassword(optTbUserExisting.get().getTbuPassword());
-					putUpdateRequestModel.setTbaStatus(optTbUserExisting.get().getTbuStatus());
-					HttpEntity<PutUpdateRequestModel> requestPutUpdate = new HttpEntity<>(putUpdateRequestModel);
-					restTemplate.put(env.getProperty("eblo-api-psm-auth") + "auth/putupdate", requestPutUpdate, String.class);					
-				}
+				PutUpdateRequestModel putUpdateRequestModel = new PutUpdateRequestModel();
+				putUpdateRequestModel.setTbaRole(optTbUserExisting.get().getTbuRole());
+				putUpdateRequestModel.setTbaEmail(optTbUserExisting.get().getTbuEmail());
+				putUpdateRequestModel.setTbaPassword(optTbUserExisting.get().getTbuPassword());
+				putUpdateRequestModel.setTbaStatus(optTbUserExisting.get().getTbuStatus());
+				HttpEntity<PutUpdateRequestModel> requestPutUpdate = new HttpEntity<>(putUpdateRequestModel);
+				restTemplate.put(env.getProperty("services.bsd.api.dms.auth") + "auth/putupdate", requestPutUpdate, String.class);
 				
 				SimpleMapper simpleMapper = new SimpleMapper();
 				
@@ -420,7 +418,7 @@ public class UserService {
 				}
 				postUserEditOrderRequestModel.setLstTbUserBrand(lstOrderTbUserBrand);
 				HttpEntity<com.api.dms.member.model.order.PostUserEditRequestModel> requestPostUserEditOrder = new HttpEntity<>(postUserEditOrderRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-order") + "user/postuseredit", requestPostUserEditOrder, String.class);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.order") + "user/postuseredit", requestPostUserEditOrder, String.class);
 				
 				com.api.dms.member.model.product.PostUserEditRequestModel postUserEditProductRequestModel = new com.api.dms.member.model.product.PostUserEditRequestModel();
 				postUserEditProductRequestModel.setEmail(requestModel.getEmail());
@@ -439,8 +437,27 @@ public class UserService {
 				}
 				postUserEditProductRequestModel.setLstTbUserBrand(lstProductTbUserBrand);
 				HttpEntity<com.api.dms.member.model.product.PostUserEditRequestModel> requestPostUserEditProduct = new HttpEntity<>(postUserEditProductRequestModel);
-				restTemplate.postForEntity(env.getProperty("eblo-api-psm-product") + "user/postuseredit", requestPostUserEditProduct, String.class);
-
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.product") + "user/postuseredit", requestPostUserEditProduct, String.class);
+				
+				com.api.dms.member.model.report.PostUserEditRequestModel postUserEditReportRequestModel = new com.api.dms.member.model.report.PostUserEditRequestModel();
+				postUserEditReportRequestModel.setEmail(requestModel.getEmail());
+				postUserEditReportRequestModel.setToken(requestModel.getToken());
+				com.api.dms.member.model.report.TbUser postUserEditReportTbUser = new com.api.dms.member.model.report.TbUser();
+				postUserEditReportTbUser = (com.api.dms.member.model.report.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditReportTbUser);
+				postUserEditReportRequestModel.setTbUser(postUserEditReportTbUser);
+				List<com.api.dms.member.model.report.TbUserBrand> lstReportTbUserBrand = new ArrayList<com.api.dms.member.model.report.TbUserBrand>();
+				for (ViewUserBrand viewUserBrand : requestModel.getLstViewUserBrand()) {
+					com.api.dms.member.model.report.TbUserBrand tbUserBrand = new com.api.dms.member.model.report.TbUserBrand();
+					tbUserBrand.setTbuId(viewUserBrand.getTbuId());
+					tbUserBrand.setTbbBrand(viewUserBrand.getTbbBrand());					
+					tbUserBrand.setTbbBrandId(viewUserBrand.getTbbBrandId());
+					tbUserBrand.setTbbBrandCheck(viewUserBrand.getTbbBrandCheck());
+					lstReportTbUserBrand.add(tbUserBrand);
+				}
+				postUserEditReportRequestModel.setLstTbUserBrand(lstReportTbUserBrand);
+				HttpEntity<com.api.dms.member.model.report.PostUserEditRequestModel> requestPostUserEditReport = new HttpEntity<>(postUserEditReportRequestModel);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.report") + "user/postuseredit", requestPostUserEditReport, String.class);
+				
 				responseModel.setStatus("200");
 				responseModel.setMessage("User updated");
 			} else {
