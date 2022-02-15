@@ -20,10 +20,12 @@ import org.springframework.web.client.RestTemplate;
 
 import com.api.dms.member.db.entity.TbUser;
 import com.api.dms.member.db.entity.TbUserBrand;
+import com.api.dms.member.db.entity.TbUserMarket;
 import com.api.dms.member.db.entity.TbUserMenu;
 import com.api.dms.member.db.entity.ViewUserBrand;
 import com.api.dms.member.db.entity.ViewUserMenu;
 import com.api.dms.member.db.repository.TbUserBrandRepository;
+import com.api.dms.member.db.repository.TbUserMarketRepository;
 import com.api.dms.member.db.repository.TbUserMenuRepository;
 import com.api.dms.member.db.repository.TbUserRepository;
 import com.api.dms.member.db.repository.ViewUserBrandRepository;
@@ -41,6 +43,7 @@ import com.api.dms.member.model.user.PostUserAddResponseModel;
 import com.api.dms.member.model.user.PostUserEditRequestModel;
 import com.api.dms.member.model.user.PostUserEditResponseModel;
 import com.api.dms.member.model.user.TbBrand;
+import com.api.dms.member.model.user.TbMarket;
 import com.api.dms.member.util.MD5;
 import com.api.dms.member.util.SimpleMapper;
 import com.api.dms.member.util.TokenUtil;
@@ -71,6 +74,9 @@ public class UserService {
 	@Autowired
 	private ViewUserBrandRepository viewUserBrandRepository;
 	
+	@Autowired
+	private TbUserMarketRepository tbUserMarketRepository;
+	
 	public GetUserResponseModel getUser(String tbuId, GetUserRequestModel requestModel) throws Exception {
 		GetUserResponseModel responseModel = new GetUserResponseModel(requestModel);
 		
@@ -93,6 +99,11 @@ public class UserService {
 			exampleViewUserMenu.setTbuId(optTbUser.get().getTbuId());
 			List<ViewUserMenu> lstViewUserMenu = viewUserMenuRepository.findAll(Example.of(exampleViewUserMenu), Sort.by("tbmName").ascending());
 			responseModel.setLstViewUserMenu(lstViewUserMenu);
+			
+			TbUserMarket exampleTbUserMarket = new TbUserMarket();
+			exampleTbUserMarket.setTbuId(optTbUser.get().getTbuId());
+			List<TbUserMarket> lstTbUserMarket = tbUserMarketRepository.findAll(Example.of(exampleTbUserMarket), Sort.by("tbumId").ascending());
+			responseModel.setLstTbUserMarket(lstTbUserMarket);
 			
 			ViewUserBrand exampleViewUserBrand = new ViewUserBrand();
 			exampleViewUserBrand.setTbuId(optTbUser.get().getTbuId());
@@ -232,6 +243,16 @@ public class UserService {
 					tbUserMenu.setTbumDelete(viewUserMenu.getTbumDelete());
 					tbUserMenu.setTbumView(viewUserMenu.getTbumView());
 					tbUserMenuRepository.save(tbUserMenu);
+				}
+				
+				for (TbMarket tbMarket : requestModel.getLstTbMarket()) {
+					TbUserMarket tbUserMarket = new TbUserMarket();
+					tbUserMarket.setTbumCreateDate(new Date());
+					tbUserMarket.setTbumCreateId(optTbUser.get().getTbuId());
+					tbUserMarket.setTbuId(tbUser.getTbuId());
+					tbUserMarket.setTbmMarket(tbMarket.getTbmMarket());					
+					tbUserMarket.setTbmMarketCheck(tbMarket.getCheck());
+					tbUserMarketRepository.save(tbUserMarket);
 				}
 				
 				for (TbBrand tbBrand : requestModel.getLstTbBrand()) {
@@ -374,6 +395,20 @@ public class UserService {
 					tbUserMenuRepository.save(tbUserMenu);
 				}
 				
+				TbUserMarket exampleTbUserMarket = new TbUserMarket();
+				exampleTbUserMarket.setTbuId(optTbUserExisting.get().getTbuId());
+				List<TbUserMarket> lstTbUserMarket = tbUserMarketRepository.findAll(Example.of(exampleTbUserMarket));
+				tbUserMarketRepository.deleteAll(lstTbUserMarket);
+				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+					TbUserMarket tbUserMarket_ = new TbUserMarket();
+					tbUserMarket_.setTbumCreateDate(new Date());
+					tbUserMarket_.setTbumCreateId(optTbUser.get().getTbuId());
+					tbUserMarket_.setTbuId(optTbUserExisting.get().getTbuId());
+					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());					
+					tbUserMarket_.setTbmMarketCheck(tbUserMarket.getTbmMarketCheck());
+					tbUserMarketRepository.save(tbUserMarket_);
+				}
+				
 				TbUserBrand exampleTbUserBrand = new TbUserBrand();
 				exampleTbUserBrand.setTbuId(optTbUserExisting.get().getTbuId());
 				List<TbUserBrand> lstTbUserBrand = tbUserBrandRepository.findAll(Example.of(exampleTbUserBrand));
@@ -407,11 +442,20 @@ public class UserService {
 				com.api.dms.member.model.order.TbUser postUserEditOrderTbUser = new com.api.dms.member.model.order.TbUser();
 				postUserEditOrderTbUser = (com.api.dms.member.model.order.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditOrderTbUser);
 				postUserEditOrderRequestModel.setTbUser(postUserEditOrderTbUser);
+				List<com.api.dms.member.model.order.TbUserMarket> lstOrderTbUserMarket = new ArrayList<com.api.dms.member.model.order.TbUserMarket>();
+				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+					com.api.dms.member.model.order.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.order.TbUserMarket();
+					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
+					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());
+					tbUserMarket_.setTbmMarketCheck(tbUserMarket.getTbmMarketCheck());
+					lstOrderTbUserMarket.add(tbUserMarket_);
+				}
+				postUserEditOrderRequestModel.setLstTbUserMarket(lstOrderTbUserMarket);
 				List<com.api.dms.member.model.order.TbUserBrand> lstOrderTbUserBrand = new ArrayList<com.api.dms.member.model.order.TbUserBrand>();
 				for (ViewUserBrand viewUserBrand : requestModel.getLstViewUserBrand()) {
 					com.api.dms.member.model.order.TbUserBrand tbUserBrand = new com.api.dms.member.model.order.TbUserBrand();
 					tbUserBrand.setTbuId(viewUserBrand.getTbuId());
-					tbUserBrand.setTbbBrand(viewUserBrand.getTbbBrand());					
+					tbUserBrand.setTbbBrand(viewUserBrand.getTbbBrand());
 					tbUserBrand.setTbbBrandId(viewUserBrand.getTbbBrandId());
 					tbUserBrand.setTbbBrandCheck(viewUserBrand.getTbbBrandCheck());
 					lstOrderTbUserBrand.add(tbUserBrand);
@@ -426,11 +470,20 @@ public class UserService {
 				com.api.dms.member.model.product.TbUser postUserEditProductTbUser = new com.api.dms.member.model.product.TbUser();
 				postUserEditProductTbUser = (com.api.dms.member.model.product.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditProductTbUser);
 				postUserEditProductRequestModel.setTbUser(postUserEditProductTbUser);
+				List<com.api.dms.member.model.product.TbUserMarket> lstProductTbUserMarket = new ArrayList<com.api.dms.member.model.product.TbUserMarket>();
+				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+					com.api.dms.member.model.product.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.product.TbUserMarket();
+					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
+					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());
+					tbUserMarket_.setTbmMarketCheck(tbUserMarket.getTbmMarketCheck());
+					lstProductTbUserMarket.add(tbUserMarket_);
+				}
+				postUserEditProductRequestModel.setLstTbUserMarket(lstProductTbUserMarket);
 				List<com.api.dms.member.model.product.TbUserBrand> lstProductTbUserBrand = new ArrayList<com.api.dms.member.model.product.TbUserBrand>();
 				for (ViewUserBrand viewUserBrand : requestModel.getLstViewUserBrand()) {
 					com.api.dms.member.model.product.TbUserBrand tbUserBrand = new com.api.dms.member.model.product.TbUserBrand();
 					tbUserBrand.setTbuId(viewUserBrand.getTbuId());
-					tbUserBrand.setTbbBrand(viewUserBrand.getTbbBrand());					
+					tbUserBrand.setTbbBrand(viewUserBrand.getTbbBrand());
 					tbUserBrand.setTbbBrandId(viewUserBrand.getTbbBrandId());
 					tbUserBrand.setTbbBrandCheck(viewUserBrand.getTbbBrandCheck());
 					lstProductTbUserBrand.add(tbUserBrand);
@@ -445,6 +498,15 @@ public class UserService {
 				com.api.dms.member.model.report.TbUser postUserEditReportTbUser = new com.api.dms.member.model.report.TbUser();
 				postUserEditReportTbUser = (com.api.dms.member.model.report.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditReportTbUser);
 				postUserEditReportRequestModel.setTbUser(postUserEditReportTbUser);
+				List<com.api.dms.member.model.report.TbUserMarket> lstReportTbUserMarket = new ArrayList<com.api.dms.member.model.report.TbUserMarket>();
+				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+					com.api.dms.member.model.report.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.report.TbUserMarket();
+					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
+					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());
+					tbUserMarket_.setTbmMarketCheck(tbUserMarket.getTbmMarketCheck());
+					lstReportTbUserMarket.add(tbUserMarket_);
+				}
+				postUserEditReportRequestModel.setLstTbUserMarket(lstReportTbUserMarket);
 				List<com.api.dms.member.model.report.TbUserBrand> lstReportTbUserBrand = new ArrayList<com.api.dms.member.model.report.TbUserBrand>();
 				for (ViewUserBrand viewUserBrand : requestModel.getLstViewUserBrand()) {
 					com.api.dms.member.model.report.TbUserBrand tbUserBrand = new com.api.dms.member.model.report.TbUserBrand();

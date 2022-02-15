@@ -11,6 +11,8 @@ public class PostUserAddRequestModel extends RequestModel {
 	
 	private List<ViewUserMenu> lstViewUserMenu;
 	
+	private List<TbMarket> lstTbMarket;
+	
 	private List<TbBrand> lstTbBrand;
 
 	public TbUser getTbUser() {
@@ -27,6 +29,14 @@ public class PostUserAddRequestModel extends RequestModel {
 
 	public void setLstViewUserMenu(List<ViewUserMenu> lstViewUserMenu) {
 		this.lstViewUserMenu = lstViewUserMenu;
+	}
+
+	public List<TbMarket> getLstTbMarket() {
+		return lstTbMarket;
+	}
+
+	public void setLstTbMarket(List<TbMarket> lstTbMarket) {
+		this.lstTbMarket = lstTbMarket;
 	}
 
 	public List<TbBrand> getLstTbBrand() {
