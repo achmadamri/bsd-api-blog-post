@@ -17,6 +17,8 @@ public class PostUserEditRequestModel extends RequestModel {
 
 	private List<ViewUserBrand> lstViewUserBrand;
 
+	private List<TbMarket> lstTbMarket;
+
 	public TbUser getTbUser() {
 		return tbUser;
 	}
@@ -47,5 +49,13 @@ public class PostUserEditRequestModel extends RequestModel {
 
 	public void setTbUser(TbUser tbUser) {
 		this.tbUser = tbUser;
+	}
+
+	public List<TbMarket> getLstTbMarket() {
+		return lstTbMarket;
+	}
+
+	public void setLstTbMarket(List<TbMarket> lstTbMarket) {
+		this.lstTbMarket = lstTbMarket;
 	}
 }

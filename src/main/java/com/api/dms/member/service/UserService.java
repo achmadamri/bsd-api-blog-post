@@ -399,14 +399,14 @@ public class UserService {
 				exampleTbUserMarket.setTbuId(optTbUserExisting.get().getTbuId());
 				List<TbUserMarket> lstTbUserMarket = tbUserMarketRepository.findAll(Example.of(exampleTbUserMarket));
 				tbUserMarketRepository.deleteAll(lstTbUserMarket);
-				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
-					TbUserMarket tbUserMarket_ = new TbUserMarket();
-					tbUserMarket_.setTbumCreateDate(new Date());
-					tbUserMarket_.setTbumCreateId(optTbUser.get().getTbuId());
-					tbUserMarket_.setTbuId(optTbUserExisting.get().getTbuId());
-					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());					
-					tbUserMarket_.setTbmMarketCheck(tbUserMarket.getTbmMarketCheck());
-					tbUserMarketRepository.save(tbUserMarket_);
+				for (TbMarket tbMarket : requestModel.getLstTbMarket()) {
+					TbUserMarket tbUserMarket = new TbUserMarket();
+					tbUserMarket.setTbumCreateDate(new Date());
+					tbUserMarket.setTbumCreateId(optTbUser.get().getTbuId());
+					tbUserMarket.setTbuId(optTbUserExisting.get().getTbuId());
+					tbUserMarket.setTbmMarket(tbMarket.getTbmMarket());					
+					tbUserMarket.setTbmMarketCheck(tbMarket.getCheck());
+					tbUserMarketRepository.save(tbUserMarket);
 				}
 				
 				TbUserBrand exampleTbUserBrand = new TbUserBrand();
