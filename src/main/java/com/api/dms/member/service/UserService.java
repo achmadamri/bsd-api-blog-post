@@ -40,6 +40,8 @@ import com.api.dms.member.model.user.GetUserRequestModel;
 import com.api.dms.member.model.user.GetUserResponseModel;
 import com.api.dms.member.model.user.PostUserAddRequestModel;
 import com.api.dms.member.model.user.PostUserAddResponseModel;
+import com.api.dms.member.model.user.PostUserChangePasswordRequestModel;
+import com.api.dms.member.model.user.PostUserChangePasswordResponseModel;
 import com.api.dms.member.model.user.PostUserEditRequestModel;
 import com.api.dms.member.model.user.PostUserEditResponseModel;
 import com.api.dms.member.model.user.TbBrand;
@@ -522,6 +524,80 @@ public class UserService {
 				
 				responseModel.setStatus("200");
 				responseModel.setMessage("User updated");
+			} else {
+				responseModel.setStatus("404");
+				responseModel.setMessage("Not found");
+			}
+		} else {
+			responseModel.setStatus("404");
+			responseModel.setMessage("Not found");
+		}
+		
+		return responseModel;
+	}
+	
+	public PostUserChangePasswordResponseModel postUserChangePassword(PostUserChangePasswordRequestModel requestModel) throws Exception {
+		PostUserChangePasswordResponseModel responseModel = new PostUserChangePasswordResponseModel(requestModel);
+		
+		tokenUtil.claims(requestModel);
+		
+		TbUser exampleTbUser = new TbUser();
+		exampleTbUser.setTbuEmail(requestModel.getEmail());
+		exampleTbUser.setTbuStatus(TbUserRepository.Active);
+		Optional<TbUser> optTbUser = tbUserRepository.findOne(Example.of(exampleTbUser));
+		
+		if (optTbUser.isPresent()) {
+			TbUser exampleTbUserExisting = new TbUser();
+			exampleTbUserExisting.setTbuEmail(requestModel.getTbUser().getTbuEmail());
+			Optional<TbUser> optTbUserExisting = tbUserRepository.findOne(Example.of(exampleTbUserExisting));
+			
+			if (optTbUserExisting.isPresent()) {
+				optTbUserExisting.get().setTbuPassword(new MD5().get(requestModel.getTbUser().getTbuPassword()));
+				optTbUserExisting.get().setTbuUpdateDate(new Date());
+				optTbUserExisting.get().setTbuUpdateId(optTbUser.get().getTbuId());
+				tbUserRepository.save(optTbUserExisting.get());
+				
+				RestTemplate restTemplate = new RestTemplate();
+				
+				PutUpdateRequestModel putUpdateRequestModel = new PutUpdateRequestModel();
+				putUpdateRequestModel.setTbaRole(optTbUserExisting.get().getTbuRole());
+				putUpdateRequestModel.setTbaEmail(optTbUserExisting.get().getTbuEmail());
+				putUpdateRequestModel.setTbaPassword(optTbUserExisting.get().getTbuPassword());
+				putUpdateRequestModel.setTbaStatus(optTbUserExisting.get().getTbuStatus());
+				HttpEntity<PutUpdateRequestModel> requestPutUpdate = new HttpEntity<>(putUpdateRequestModel);
+				restTemplate.put(env.getProperty("services.bsd.api.dms.auth") + "auth/putupdate", requestPutUpdate, String.class);
+				
+				SimpleMapper simpleMapper = new SimpleMapper();
+				
+				com.api.dms.member.model.order.PostUserChangePasswordRequestModel postUserChangePasswordOrderRequestModel = new com.api.dms.member.model.order.PostUserChangePasswordRequestModel();
+				postUserChangePasswordOrderRequestModel.setEmail(requestModel.getEmail());
+				postUserChangePasswordOrderRequestModel.setToken(requestModel.getToken());
+				com.api.dms.member.model.order.TbUser postUserChangePasswordOrderTbUser = new com.api.dms.member.model.order.TbUser();
+				postUserChangePasswordOrderTbUser = (com.api.dms.member.model.order.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserChangePasswordOrderTbUser);
+				postUserChangePasswordOrderRequestModel.setTbUser(postUserChangePasswordOrderTbUser);
+				HttpEntity<com.api.dms.member.model.order.PostUserChangePasswordRequestModel> requestPostUserChangePasswordOrder = new HttpEntity<>(postUserChangePasswordOrderRequestModel);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.order") + "user/postuserchangepassword", requestPostUserChangePasswordOrder, String.class);
+				
+				com.api.dms.member.model.product.PostUserChangePasswordRequestModel postUserChangePasswordProductRequestModel = new com.api.dms.member.model.product.PostUserChangePasswordRequestModel();
+				postUserChangePasswordProductRequestModel.setEmail(requestModel.getEmail());
+				postUserChangePasswordProductRequestModel.setToken(requestModel.getToken());
+				com.api.dms.member.model.product.TbUser postUserChangePasswordProductTbUser = new com.api.dms.member.model.product.TbUser();
+				postUserChangePasswordProductTbUser = (com.api.dms.member.model.product.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserChangePasswordProductTbUser);
+				postUserChangePasswordProductRequestModel.setTbUser(postUserChangePasswordProductTbUser);
+				HttpEntity<com.api.dms.member.model.product.PostUserChangePasswordRequestModel> requestPostUserChangePasswordProduct = new HttpEntity<>(postUserChangePasswordProductRequestModel);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.product") + "user/postuserchangepassword", requestPostUserChangePasswordProduct, String.class);
+				
+				com.api.dms.member.model.report.PostUserChangePasswordRequestModel postUserChangePasswordReportRequestModel = new com.api.dms.member.model.report.PostUserChangePasswordRequestModel();
+				postUserChangePasswordReportRequestModel.setEmail(requestModel.getEmail());
+				postUserChangePasswordReportRequestModel.setToken(requestModel.getToken());
+				com.api.dms.member.model.report.TbUser postUserChangePasswordReportTbUser = new com.api.dms.member.model.report.TbUser();
+				postUserChangePasswordReportTbUser = (com.api.dms.member.model.report.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserChangePasswordReportTbUser);
+				postUserChangePasswordReportRequestModel.setTbUser(postUserChangePasswordReportTbUser);
+				HttpEntity<com.api.dms.member.model.report.PostUserChangePasswordRequestModel> requestPostUserChangePasswordReport = new HttpEntity<>(postUserChangePasswordReportRequestModel);
+				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.report") + "user/postuserchangepassword", requestPostUserChangePasswordReport, String.class);
+				
+				responseModel.setStatus("200");
+				responseModel.setMessage("User change password");
 			} else {
 				responseModel.setStatus("404");
 				responseModel.setMessage("Not found");

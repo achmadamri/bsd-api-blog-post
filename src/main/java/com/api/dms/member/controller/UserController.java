@@ -25,8 +25,8 @@ import com.api.dms.member.model.user.GetUserRequestModel;
 import com.api.dms.member.model.user.GetUserResponseModel;
 import com.api.dms.member.model.user.PostUserAddRequestModel;
 import com.api.dms.member.model.user.PostUserAddResponseModel;
-import com.api.dms.member.model.user.PostUserDeleteRequestModel;
-import com.api.dms.member.model.user.PostUserDeleteResponseModel;
+import com.api.dms.member.model.user.PostUserChangePasswordRequestModel;
+import com.api.dms.member.model.user.PostUserChangePasswordResponseModel;
 import com.api.dms.member.model.user.PostUserEditRequestModel;
 import com.api.dms.member.model.user.PostUserEditResponseModel;
 import com.api.dms.member.service.UserService;
@@ -125,6 +125,20 @@ public class UserController {
 		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
 		
 		PostUserEditResponseModel responseModel = userService.postUserEdit(requestModel);
+		
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("403") ? HttpStatus.FORBIDDEN : (responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND));
+		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
+
+		return responseEntity;
+	}
+	
+	@PostMapping("/postuserchangepassword")
+	@Transactional
+	public HttpEntity<?> postUserChangePassword(@Valid @RequestBody PostUserChangePasswordRequestModel requestModel) throws Exception {
+		String fid = new Uid().generateString(20);
+		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
+		
+		PostUserChangePasswordResponseModel responseModel = userService.postUserChangePassword(requestModel);
 		
 		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("403") ? HttpStatus.FORBIDDEN : (responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND));
 		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
