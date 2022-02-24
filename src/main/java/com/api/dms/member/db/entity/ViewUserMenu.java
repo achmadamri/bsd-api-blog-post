@@ -49,6 +49,9 @@ public class ViewUserMenu implements Serializable {
 	@Column(name="tbum_view")
 	private Integer tbumView;
 
+	@Column(name="tbm_sort")
+	private Integer tbmSort;
+
 	@Id
 	private String uuid;
 
@@ -141,6 +144,14 @@ public class ViewUserMenu implements Serializable {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public Integer getTbmSort() {
+		return tbmSort;
+	}
+
+	public void setTbmSort(Integer tbmSort) {
+		this.tbmSort = tbmSort;
 	}
 
 }

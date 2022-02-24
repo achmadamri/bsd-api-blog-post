@@ -180,7 +180,7 @@ public class UserService {
 			ViewUserMenu exampleViewUserMenu = new ViewUserMenu();	
 			exampleViewUserMenu.setTbuEmail(tbuEmail.equals("") ? "admin@mail.com" : tbuEmail);
 			
-			List<ViewUserMenu> lstViewUserMenu = viewUserMenuRepository.findAll(Example.of(exampleViewUserMenu), Sort.by("tbmName").ascending());
+			List<ViewUserMenu> lstViewUserMenu = viewUserMenuRepository.findAll(Example.of(exampleViewUserMenu), Sort.by("tbmSort").ascending());
 			
 			if (tbuEmail.equals("")) {
 				for (ViewUserMenu viewUserMenu : lstViewUserMenu) {
@@ -523,7 +523,7 @@ public class UserService {
 				restTemplate.postForEntity(env.getProperty("services.bsd.api.dms.report") + "user/postuseredit", requestPostUserEditReport, String.class);
 				
 				responseModel.setStatus("200");
-				responseModel.setMessage("User updated");
+				responseModel.setMessage("User " + optTbUserExisting.get().getTbuEmail() + " updated");
 			} else {
 				responseModel.setStatus("404");
 				responseModel.setMessage("Not found");
