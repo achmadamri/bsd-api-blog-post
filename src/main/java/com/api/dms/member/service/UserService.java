@@ -410,6 +410,7 @@ public class UserService {
 					tbUserMarket.setTbmMarketCheck(tbMarket.getCheck());
 					tbUserMarketRepository.save(tbUserMarket);
 				}
+				lstTbUserMarket = tbUserMarketRepository.findAll(Example.of(exampleTbUserMarket));
 				
 				TbUserBrand exampleTbUserBrand = new TbUserBrand();
 				exampleTbUserBrand.setTbuId(optTbUserExisting.get().getTbuId());
@@ -445,7 +446,7 @@ public class UserService {
 				postUserEditOrderTbUser = (com.api.dms.member.model.order.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditOrderTbUser);
 				postUserEditOrderRequestModel.setTbUser(postUserEditOrderTbUser);
 				List<com.api.dms.member.model.order.TbUserMarket> lstOrderTbUserMarket = new ArrayList<com.api.dms.member.model.order.TbUserMarket>();
-				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+				for (TbUserMarket tbUserMarket : lstTbUserMarket) {
 					com.api.dms.member.model.order.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.order.TbUserMarket();
 					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
 					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());
@@ -473,7 +474,7 @@ public class UserService {
 				postUserEditProductTbUser = (com.api.dms.member.model.product.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditProductTbUser);
 				postUserEditProductRequestModel.setTbUser(postUserEditProductTbUser);
 				List<com.api.dms.member.model.product.TbUserMarket> lstProductTbUserMarket = new ArrayList<com.api.dms.member.model.product.TbUserMarket>();
-				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+				for (TbUserMarket tbUserMarket : lstTbUserMarket) {
 					com.api.dms.member.model.product.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.product.TbUserMarket();
 					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
 					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());
@@ -501,7 +502,7 @@ public class UserService {
 				postUserEditReportTbUser = (com.api.dms.member.model.report.TbUser) simpleMapper.assign(optTbUserExisting.get(), postUserEditReportTbUser);
 				postUserEditReportRequestModel.setTbUser(postUserEditReportTbUser);
 				List<com.api.dms.member.model.report.TbUserMarket> lstReportTbUserMarket = new ArrayList<com.api.dms.member.model.report.TbUserMarket>();
-				for (TbUserMarket tbUserMarket : requestModel.getLstTbUserMarket()) {
+				for (TbUserMarket tbUserMarket : lstTbUserMarket) {
 					com.api.dms.member.model.report.TbUserMarket tbUserMarket_ = new com.api.dms.member.model.report.TbUserMarket();
 					tbUserMarket_.setTbuId(tbUserMarket.getTbuId());
 					tbUserMarket_.setTbmMarket(tbUserMarket.getTbmMarket());

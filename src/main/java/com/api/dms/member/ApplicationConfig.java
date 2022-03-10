@@ -36,7 +36,7 @@ public class ApplicationConfig {
 	}
 
 	private ApiInfo getApiInfo() {
-		String appName = "services.bsd.api.dms.member";
+		String appName = "bsd-api-dms-member";
 		
 		return new ApiInfo(appName, appName, "1.0", "",
 				new Contact(appName, appName, "EMAIL"), "LICENSE", "LICENSE URL",
