@@ -72,7 +72,12 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`tbu_id`),
   UNIQUE KEY `tb_user_tbu_email_uindex` (`tbu_email`),
   UNIQUE KEY `tb_user_tbu_uid_uindex` (`tbu_uid`),
-  KEY `tb_user_tbu_status_index` (`tbu_status`)
+  KEY `tb_user_tbu_status_index` (`tbu_status`),
+  KEY `tb_user_tbu_password_index` (`tbu_password`),
+  KEY `tb_user_tbu_firstname_index` (`tbu_firstname`),
+  KEY `tb_user_tbu_lastname_index` (`tbu_lastname`),
+  KEY `tb_user_tbu_token_salt_index` (`tbu_token_salt`),
+  KEY `tb_user_tbu_role_index` (`tbu_role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,7 +108,11 @@ CREATE TABLE `tb_user_brand` (
   `tbb_brand` varchar(255) DEFAULT NULL,
   `tbb_brand_id` varchar(5) DEFAULT NULL,
   `tbb_brand_check` int(11) DEFAULT NULL,
-  PRIMARY KEY (`tbub_id`)
+  PRIMARY KEY (`tbub_id`),
+  KEY `tb_user_brand_tbu_id_index` (`tbu_id`),
+  KEY `tb_user_brand_tbb_brand_index` (`tbb_brand`),
+  KEY `tb_user_brand_tbb_brand_id_index` (`tbb_brand_id`),
+  KEY `tb_user_brand_tbb_brand_check_index` (`tbb_brand_check`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1390 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,7 +142,10 @@ CREATE TABLE `tb_user_market` (
   `tbu_id` int(11) DEFAULT NULL,
   `tbm_market` varchar(255) DEFAULT NULL,
   `tbm_market_check` int(11) DEFAULT NULL,
-  PRIMARY KEY (`tbum_id`)
+  PRIMARY KEY (`tbum_id`),
+  KEY `tb_user_market_tbu_id_index` (`tbu_id`),
+  KEY `tb_user_market_tbm_market_index` (`tbm_market`),
+  KEY `tb_user_market_tbm_market_check_index` (`tbm_market_check`)
 ) ENGINE=InnoDB AUTO_INCREMENT=758 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -166,7 +178,9 @@ CREATE TABLE `tb_user_menu` (
   `tbum_edit` int(11) DEFAULT NULL,
   `tbum_delete` int(11) DEFAULT NULL,
   `tbum_view` int(11) DEFAULT NULL,
-  PRIMARY KEY (`tbum_id`)
+  PRIMARY KEY (`tbum_id`),
+  KEY `tb_user_menu_tbu_id_index` (`tbu_id`),
+  KEY `tb_user_menu_tbm_id_index` (`tbm_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=590 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -271,4 +285,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-10 16:00:27
+-- Dump completed on 2022-03-11 17:17:34
