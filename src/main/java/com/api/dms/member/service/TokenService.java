@@ -1,5 +1,6 @@
 package com.api.dms.member.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class TokenService {
 		optTbUser.ifPresentOrElse(tbUser -> {
 			tokenUtil.store(requestModel.getEmail(), requestModel.getSalt());
 			
+			tbUser.setTbuUpdateDate(new Date());
+			tbUser.setTbuUpdateId(tbUser.getTbuId());			
 			tbUser.setTbuTokenSalt(TokenUtil.keyMap.get(tbUser.getTbuEmail()));
+			tbUserRepository.save(tbUser);
 			
 			responseModel.setStatus("200");
 			responseModel.setMessage("User ok");
