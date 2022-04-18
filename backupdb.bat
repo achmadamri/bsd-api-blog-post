@@ -1,1 +1,1 @@
-c:\xampp\mysql\bin\mysqldump.exe -uroot -pP@55w0rd bsd_api_dms_member > C:\Users\achma\Documents\workspace-spring-tool-suite-4-4.7.1.RELEASE\bsd-api-dms-member\bsd_api_dms_member.sql
+c:\xampp\mysql\bin\mysqldump.exe -uroot -pP@55w0rd bsd_api_dms_member > "C:\Users\Achmad Amri\git\bsd-api-dms-member\bsd_api_dms_member.sql"
