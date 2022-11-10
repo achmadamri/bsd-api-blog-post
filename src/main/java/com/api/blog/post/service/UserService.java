@@ -34,40 +34,28 @@ public class UserService {
 	public PostUserAddResponseModel postUserAdd(PostUserAddRequestModel requestModel) throws Exception {
 		PostUserAddResponseModel responseModel = new PostUserAddResponseModel(requestModel);
 		
-		tokenUtil.claims(requestModel);
+		TbUser exampleTbUserNew = new TbUser();
+		exampleTbUserNew.setTbuEmail(requestModel.getTbUser().getTbuEmail());
+		Optional<TbUser> optTbUserNew = tbUserRepository.findOne(Example.of(exampleTbUserNew));
 		
-		TbUser exampleTbUser = new TbUser();
-		exampleTbUser.setTbuEmail(requestModel.getEmail());
-		exampleTbUser.setTbuStatus(TbUserRepository.Active);
-		Optional<TbUser> optTbUser = tbUserRepository.findOne(Example.of(exampleTbUser));
-		
-		if (optTbUser.isPresent()) {
-			TbUser exampleTbUserNew = new TbUser();
-			exampleTbUserNew.setTbuEmail(requestModel.getTbUser().getTbuEmail());
-			Optional<TbUser> optTbUserNew = tbUserRepository.findOne(Example.of(exampleTbUserNew));
-			
-			if (optTbUserNew.isPresent()) {
-				responseModel.setStatus("403");
-				responseModel.setMessage("Data already exists. Email : " + requestModel.getTbUser().getTbuEmail());
-			} else {
-				TbUser tbUser = new TbUser();
-				tbUser.setTbuEmail(requestModel.getTbUser().getTbuEmail());
-				tbUser.setTbuFirstname(requestModel.getTbUser().getTbuFirstname());
-				tbUser.setTbuLastname(requestModel.getTbUser().getTbuLastname());
-				tbUser.setTbuPassword(requestModel.getTbUser().getTbuPassword());
-				tbUser.setTbuCreateDate(new Date());
-				tbUser.setTbuCreateId(optTbUser.get().getTbuId());
-				tbUser.setTbuStatus(requestModel.getTbUser().getTbuStatus());
-				tbUser.setTbuTokenSalt(requestModel.getTbUser().getTbuTokenSalt());
-				tbUser.setTbuRole(requestModel.getTbUser().getTbuRole());
-				tbUserRepository.save(tbUser);
-				
-				responseModel.setStatus("200");
-				responseModel.setMessage("User created");
-			}			
+		if (optTbUserNew.isPresent()) {
+			responseModel.setStatus("403");
+			responseModel.setMessage("Data already exists. Email : " + requestModel.getTbUser().getTbuEmail());
 		} else {
-			responseModel.setStatus("404");
-			responseModel.setMessage("Not found");
+			TbUser tbUser = new TbUser();
+			tbUser.setTbuEmail(requestModel.getTbUser().getTbuEmail());
+			tbUser.setTbuFirstname(requestModel.getTbUser().getTbuFirstname());
+			tbUser.setTbuLastname(requestModel.getTbUser().getTbuLastname());
+			tbUser.setTbuPassword(requestModel.getTbUser().getTbuPassword());
+			tbUser.setTbuCreateDate(new Date());
+			tbUser.setTbuCreateId(0);
+			tbUser.setTbuStatus(requestModel.getTbUser().getTbuStatus());
+			tbUser.setTbuTokenSalt(requestModel.getTbUser().getTbuTokenSalt());
+			tbUser.setTbuRole(requestModel.getTbUser().getTbuRole());
+			tbUserRepository.save(tbUser);
+			
+			responseModel.setStatus("200");
+			responseModel.setMessage("User created");
 		}
 		
 		return responseModel;
