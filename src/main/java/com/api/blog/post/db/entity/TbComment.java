@@ -28,7 +28,7 @@ public class TbComment implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="tbc_id")
-	private int tbcId;
+	private Integer tbcId;
 
 	@Lob
 	@Column(name="tbc_content", columnDefinition = "text")
@@ -46,24 +46,24 @@ public class TbComment implements Serializable {
 	private Date tbcUpdateDate;
 
 	@Column(name="tbc_update_id")
-	private int tbcUpdateId;
+	private Integer tbcUpdateId;
 
-	@Column(name="tbd_id")
-	private int tbdId;
+	@Column(name="tbe_id")
+	private Integer tbeId;
 
 	public TbComment() {
 	}
 
-	public int getTbcId() {
-		return this.tbcId;
+	public Integer getTbcId() {
+		return tbcId;
 	}
 
-	public void setTbcId(int tbcId) {
+	public void setTbcId(Integer tbcId) {
 		this.tbcId = tbcId;
 	}
 
 	public String getTbcContent() {
-		return this.tbcContent;
+		return tbcContent;
 	}
 
 	public void setTbcContent(String tbcContent) {
@@ -71,7 +71,7 @@ public class TbComment implements Serializable {
 	}
 
 	public Date getTbcCreateDate() {
-		return this.tbcCreateDate;
+		return tbcCreateDate;
 	}
 
 	public void setTbcCreateDate(Date tbcCreateDate) {
@@ -79,7 +79,7 @@ public class TbComment implements Serializable {
 	}
 
 	public int getTbcCreateId() {
-		return this.tbcCreateId;
+		return tbcCreateId;
 	}
 
 	public void setTbcCreateId(int tbcCreateId) {
@@ -87,27 +87,27 @@ public class TbComment implements Serializable {
 	}
 
 	public Date getTbcUpdateDate() {
-		return this.tbcUpdateDate;
+		return tbcUpdateDate;
 	}
 
 	public void setTbcUpdateDate(Date tbcUpdateDate) {
 		this.tbcUpdateDate = tbcUpdateDate;
 	}
 
-	public int getTbcUpdateId() {
-		return this.tbcUpdateId;
+	public Integer getTbcUpdateId() {
+		return tbcUpdateId;
 	}
 
-	public void setTbcUpdateId(int tbcUpdateId) {
+	public void setTbcUpdateId(Integer tbcUpdateId) {
 		this.tbcUpdateId = tbcUpdateId;
 	}
 
-	public int getTbdId() {
-		return this.tbdId;
+	public Integer getTbeId() {
+		return tbeId;
 	}
 
-	public void setTbdId(int tbdId) {
-		this.tbdId = tbdId;
+	public void setTbeId(Integer tbeId) {
+		this.tbeId = tbeId;
 	}
 
 }

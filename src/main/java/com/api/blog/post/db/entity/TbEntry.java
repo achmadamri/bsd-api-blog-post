@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,6 +32,10 @@ public class TbEntry implements Serializable {
 
 	@Column(name="tbe_chunk")
 	private String tbeChunk;
+	
+	@Lob
+	@Column(name="tbe_content", columnDefinition = "longtext")
+	private String tbeContent;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="tbe_create_date")
@@ -53,7 +58,7 @@ public class TbEntry implements Serializable {
 	}
 
 	public int getTbeId() {
-		return this.tbeId;
+		return tbeId;
 	}
 
 	public void setTbeId(int tbeId) {
@@ -61,15 +66,23 @@ public class TbEntry implements Serializable {
 	}
 
 	public String getTbeChunk() {
-		return this.tbeChunk;
+		return tbeChunk;
 	}
 
 	public void setTbeChunk(String tbeChunk) {
 		this.tbeChunk = tbeChunk;
 	}
 
+	public String getTbeContent() {
+		return tbeContent;
+	}
+
+	public void setTbeContent(String tbeContent) {
+		this.tbeContent = tbeContent;
+	}
+
 	public Date getTbeCreateDate() {
-		return this.tbeCreateDate;
+		return tbeCreateDate;
 	}
 
 	public void setTbeCreateDate(Date tbeCreateDate) {
@@ -77,7 +90,7 @@ public class TbEntry implements Serializable {
 	}
 
 	public int getTbeCreateId() {
-		return this.tbeCreateId;
+		return tbeCreateId;
 	}
 
 	public void setTbeCreateId(int tbeCreateId) {
@@ -85,7 +98,7 @@ public class TbEntry implements Serializable {
 	}
 
 	public String getTbeTitle() {
-		return this.tbeTitle;
+		return tbeTitle;
 	}
 
 	public void setTbeTitle(String tbeTitle) {
@@ -93,7 +106,7 @@ public class TbEntry implements Serializable {
 	}
 
 	public Date getTbeUpdateDate() {
-		return this.tbeUpdateDate;
+		return tbeUpdateDate;
 	}
 
 	public void setTbeUpdateDate(Date tbeUpdateDate) {
@@ -101,7 +114,7 @@ public class TbEntry implements Serializable {
 	}
 
 	public int getTbeUpdateId() {
-		return this.tbeUpdateId;
+		return tbeUpdateId;
 	}
 
 	public void setTbeUpdateId(int tbeUpdateId) {
