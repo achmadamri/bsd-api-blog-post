@@ -60,6 +60,7 @@ CREATE TABLE `tb_entry` (
   `tbe_title` varchar(100) DEFAULT NULL,
   `tbe_chunk` varchar(100) DEFAULT NULL,
   `tbe_content` longtext DEFAULT NULL,
+  `tbe_counter` int(11) DEFAULT NULL,
   PRIMARY KEY (`tbe_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,7 +71,7 @@ CREATE TABLE `tb_entry` (
 
 LOCK TABLES `tb_entry` WRITE;
 /*!40000 ALTER TABLE `tb_entry` DISABLE KEYS */;
-INSERT INTO `tb_entry` VALUES (23,'2022-11-10 09:24:08',1,NULL,0,'Title','<p><i><strong>Content</strong></i></p>','<p><i><strong>Content</strong></i></p>'),(24,'2022-11-10 11:41:21',1,NULL,0,'Test 2','<p>Test 2</p>','<p>Test 2</p>'),(25,'2022-11-10 11:41:26',1,NULL,0,'Test 3','<p>Test 3</p>','<p>Test 3</p>'),(26,'2022-11-10 12:59:05',1,NULL,0,'Test Blog 1','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i></p><p><strong>Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</strong></p><blockquote><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p></blockquote>');
+INSERT INTO `tb_entry` VALUES (23,'2022-11-10 09:24:08',1,NULL,0,'Title','<p><i><strong>Content</strong></i></p>','<p><i><strong>Content</strong></i></p>',2),(24,'2022-11-10 11:41:21',1,NULL,0,'Test 2','<p>Test 2</p>','<p>Test 2</p>',NULL),(25,'2022-11-10 11:41:26',1,NULL,0,'Test 3','<p>Test 3</p>','<p>Test 3</p>',4),(26,'2022-11-10 12:59:05',1,NULL,0,'Test Blog 1','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i></p><p><strong>Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</strong></p><blockquote><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p></blockquote>',8);
 /*!40000 ALTER TABLE `tb_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +101,7 @@ CREATE TABLE `tb_user` (
   `tbu_token_salt` varchar(36) CHARACTER SET latin1 DEFAULT NULL,
   `tbu_role` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`tbu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +110,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2022-11-10 12:58:08',1,'admin@mail.com','202cb962ac59075b964b07152d234b70','admin','admin','123','Jakarta','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','ja1vg9ozc69nzckdxym76mu0110sfsglf7hc','ADMIN'),(2,'2022-11-10 09:48:56',1,'2022-11-10 11:36:05',2,'test@email.com','202cb962ac59075b964b07152d234b70','test','test',NULL,NULL,NULL,'active',NULL,NULL,'q2vgl3wgwg8e5exvz1pu6zsseifrtg4j0gvh','ADMIN');
+INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2022-11-10 13:15:57',1,'admin@mail.com','202cb962ac59075b964b07152d234b70','admin','admin','123','Jakarta','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','lk4w7b5pwy7ke7poay1njenn1cf1jejoe6fl','ADMIN'),(2,'2022-11-10 09:48:56',1,'2022-11-10 11:36:05',2,'test@email.com','202cb962ac59075b964b07152d234b70','test','test',NULL,NULL,NULL,'active',NULL,NULL,'q2vgl3wgwg8e5exvz1pu6zsseifrtg4j0gvh','ADMIN'),(3,'2022-11-10 13:24:50',0,'2022-11-10 13:24:53',3,'test2@mail.com','202cb962ac59075b964b07152d234b70','test2','test2',NULL,NULL,NULL,'active',NULL,NULL,'xww9b235ydinsy0nnvmrthtje8g4gfritcl3','ADMIN');
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,4 +167,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-10 20:00:03
+-- Dump completed on 2022-11-10 20:25:35

@@ -217,6 +217,9 @@ public class EntryService {
 		Optional<TbEntry> optTbEntry = tbEntryRepository.findById(Integer.valueOf(tbeId));
 		
 		if (optTbEntry.isPresent()) {
+			optTbEntry.get().setTbeCounter(optTbEntry.get().getTbeCounter() == null ? 1 : optTbEntry.get().getTbeCounter() + 1);
+			tbEntryRepository.save(optTbEntry.get());
+			
 			responseModel.setTbEntry(optTbEntry.get());
 			
 			TbComment exampleTbComment = new TbComment();

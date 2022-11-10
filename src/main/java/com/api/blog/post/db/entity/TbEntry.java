@@ -28,7 +28,7 @@ public class TbEntry implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="tbe_id")
-	private int tbeId;
+	private Integer tbeId;
 
 	@Column(name="tbe_chunk")
 	private String tbeChunk;
@@ -42,7 +42,7 @@ public class TbEntry implements Serializable {
 	private Date tbeCreateDate;
 
 	@Column(name="tbe_create_id")
-	private int tbeCreateId;
+	private Integer tbeCreateId;
 
 	@Column(name="tbe_title")
 	private String tbeTitle;
@@ -52,16 +52,19 @@ public class TbEntry implements Serializable {
 	private Date tbeUpdateDate;
 
 	@Column(name="tbe_update_id")
-	private int tbeUpdateId;
+	private Integer tbeUpdateId;
+
+	@Column(name="tbe_counter")
+	private Integer tbeCounter;
 
 	public TbEntry() {
 	}
 
-	public int getTbeId() {
+	public Integer getTbeId() {
 		return tbeId;
 	}
 
-	public void setTbeId(int tbeId) {
+	public void setTbeId(Integer tbeId) {
 		this.tbeId = tbeId;
 	}
 
@@ -89,11 +92,11 @@ public class TbEntry implements Serializable {
 		this.tbeCreateDate = tbeCreateDate;
 	}
 
-	public int getTbeCreateId() {
+	public Integer getTbeCreateId() {
 		return tbeCreateId;
 	}
 
-	public void setTbeCreateId(int tbeCreateId) {
+	public void setTbeCreateId(Integer tbeCreateId) {
 		this.tbeCreateId = tbeCreateId;
 	}
 
@@ -113,12 +116,20 @@ public class TbEntry implements Serializable {
 		this.tbeUpdateDate = tbeUpdateDate;
 	}
 
-	public int getTbeUpdateId() {
+	public Integer getTbeUpdateId() {
 		return tbeUpdateId;
 	}
 
-	public void setTbeUpdateId(int tbeUpdateId) {
+	public void setTbeUpdateId(Integer tbeUpdateId) {
 		this.tbeUpdateId = tbeUpdateId;
+	}
+
+	public Integer getTbeCounter() {
+		return tbeCounter;
+	}
+
+	public void setTbeCounter(Integer tbeCounter) {
+		this.tbeCounter = tbeCounter;
 	}
 
 }
