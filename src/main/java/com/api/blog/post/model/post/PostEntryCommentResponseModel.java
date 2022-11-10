@@ -1,20 +1,18 @@
 package com.api.blog.post.model.post;
 
-import java.util.List;
-
 import com.api.blog.post.db.entity.TbComment;
 import com.api.blog.post.db.entity.TbEntry;
 import com.api.blog.post.model.ResponseModel;
 
-public class GetEntryResponseModel extends ResponseModel {
-	
-	public GetEntryResponseModel(GetEntryRequestModel requestModel) {
+public class PostEntryCommentResponseModel extends ResponseModel {
+
+	public PostEntryCommentResponseModel(PostEntryCommentRequestModel requestModel) {
 		super(requestModel);
 	}
-	
+
 	private TbEntry tbEntry;
 	
-	private List<TbComment> lstTbComment;
+	private TbComment tbComment;
 
 	public TbEntry getTbEntry() {
 		return tbEntry;
@@ -24,11 +22,11 @@ public class GetEntryResponseModel extends ResponseModel {
 		this.tbEntry = tbEntry;
 	}
 
-	public List<TbComment> getLstTbComment() {
-		return lstTbComment;
+	public TbComment getTbComment() {
+		return tbComment;
 	}
 
-	public void setLstTbComment(List<TbComment> lstTbComment) {
-		this.lstTbComment = lstTbComment;
+	public void setTbComment(TbComment tbComment) {
+		this.tbComment = tbComment;
 	}
 }

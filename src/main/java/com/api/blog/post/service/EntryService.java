@@ -15,9 +15,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.api.blog.post.db.entity.TbComment;
 import com.api.blog.post.db.entity.TbEntry;
 import com.api.blog.post.db.entity.TbUser;
 import com.api.blog.post.db.entity.ViewUserEntry;
+import com.api.blog.post.db.repository.TbCommentRepository;
 import com.api.blog.post.db.repository.TbEntryRepository;
 import com.api.blog.post.db.repository.TbUserRepository;
 import com.api.blog.post.db.repository.ViewUserEntryRepository;
@@ -27,6 +29,8 @@ import com.api.blog.post.model.post.GetEntryRequestModel;
 import com.api.blog.post.model.post.GetEntryResponseModel;
 import com.api.blog.post.model.post.PostEntryAddRequestModel;
 import com.api.blog.post.model.post.PostEntryAddResponseModel;
+import com.api.blog.post.model.post.PostEntryCommentRequestModel;
+import com.api.blog.post.model.post.PostEntryCommentResponseModel;
 import com.api.blog.post.model.post.PostEntryDeleteRequestModel;
 import com.api.blog.post.model.post.PostEntryDeleteResponseModel;
 import com.api.blog.post.model.post.PostEntryEditRequestModel;
@@ -52,6 +56,9 @@ public class EntryService {
 	
 	@Autowired
 	private TbEntryRepository tbEntryRepository;
+	
+	@Autowired
+	private TbCommentRepository tbCommentRepository;
 	
 	public GetEntryListResponseModel getEntryList(String tbeTitle, String tbeChunk, String tbeContent, String length, String pageSize, String pageIndex, GetEntryListRequestModel requestModel) throws Exception {
 		GetEntryListResponseModel responseModel = new GetEntryListResponseModel(requestModel);
@@ -97,6 +104,29 @@ public class EntryService {
 		return responseModel;
 	}
 	
+	public GetEntryListResponseModel getEntryView(String tbeTitle, String tbeChunk, String tbeContent, String length, String pageSize, String pageIndex, GetEntryListRequestModel requestModel) throws Exception {
+		GetEntryListResponseModel responseModel = new GetEntryListResponseModel(requestModel);
+		
+		ViewUserEntry viewUserEntry = new ViewUserEntry();
+		
+		Page<ViewUserEntry> pgViewUserEntry = viewUserEntryRepository.findAll(Example.of(viewUserEntry), PageRequest.of(Integer.valueOf(pageIndex), Integer.valueOf(pageSize), Sort.by("tbeCreateDate").descending()));
+		
+		if (pgViewUserEntry.toList().size() > 0) {
+			List<ViewUserEntry> lstViewUserEntry = pgViewUserEntry.toList();
+			responseModel.setLstViewUserEntry(lstViewUserEntry);
+			
+			responseModel.setLength(viewUserEntryRepository.count(Example.of(viewUserEntry)));
+			
+			responseModel.setStatus("200");
+			responseModel.setMessage("Get Entry List ok");
+		} else {
+			responseModel.setStatus("404");
+			responseModel.setMessage("Not found");
+		}
+		
+		return responseModel;
+	}
+	
 	public PostEntryAddResponseModel postEntryAdd(PostEntryAddRequestModel requestModel) throws Exception {
 		PostEntryAddResponseModel responseModel = new PostEntryAddResponseModel(requestModel);
 		
@@ -127,6 +157,30 @@ public class EntryService {
 		return responseModel;
 	}
 	
+	public PostEntryCommentResponseModel postEntryComment(PostEntryCommentRequestModel requestModel) throws Exception {
+		PostEntryCommentResponseModel responseModel = new PostEntryCommentResponseModel(requestModel);
+		
+		Optional<TbEntry> optTbEntry = tbEntryRepository.findById(requestModel.getTbEntry().getTbeId());
+		
+		if (optTbEntry.isPresent()) {
+			TbComment tbComment = new TbComment();
+			tbComment.setTbcCreateDate(new Date());
+			tbComment.setTbcCreateId(0);
+			tbComment.setTbeId(optTbEntry.get().getTbeId());
+			tbComment.setTbcContent(requestModel.getTbComment().getTbcContent());
+			
+			tbCommentRepository.save(tbComment);
+			
+			responseModel.setStatus("200");
+			responseModel.setMessage("Comment created");
+		} else {
+			responseModel.setStatus("404");
+			responseModel.setMessage("Not found");
+		}
+		
+		return responseModel;
+	}
+	
 	public GetEntryResponseModel getEntry(String tbeId, GetEntryRequestModel requestModel) throws Exception {
 		GetEntryResponseModel responseModel = new GetEntryResponseModel(requestModel);
 		
@@ -149,6 +203,30 @@ public class EntryService {
 				responseModel.setStatus("404");
 				responseModel.setMessage("Not found");
 			}
+		} else {
+			responseModel.setStatus("404");
+			responseModel.setMessage("Not found");
+		}
+		
+		return responseModel;
+	}
+	
+	public GetEntryResponseModel getEntryPost(String tbeId, GetEntryRequestModel requestModel) throws Exception {
+		GetEntryResponseModel responseModel = new GetEntryResponseModel(requestModel);
+		
+		Optional<TbEntry> optTbEntry = tbEntryRepository.findById(Integer.valueOf(tbeId));
+		
+		if (optTbEntry.isPresent()) {
+			responseModel.setTbEntry(optTbEntry.get());
+			
+			TbComment exampleTbComment = new TbComment();
+			exampleTbComment.setTbeId(optTbEntry.get().getTbeId());
+			
+			List<TbComment> lstTbComment = tbCommentRepository.findAll(Example.of(exampleTbComment), Sort.by("tbcId").ascending());
+			responseModel.setLstTbComment(lstTbComment);
+			
+			responseModel.setStatus("200");
+			responseModel.setMessage("Entry ok");				
 		} else {
 			responseModel.setStatus("404");
 			responseModel.setMessage("Not found");

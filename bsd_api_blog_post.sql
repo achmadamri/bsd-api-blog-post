@@ -28,10 +28,10 @@ CREATE TABLE `tb_comment` (
   `tbc_create_id` int(11) DEFAULT NULL,
   `tbc_update_date` datetime DEFAULT NULL,
   `tbc_update_id` int(11) DEFAULT NULL,
-  `tbd_id` int(11) DEFAULT NULL,
+  `tbe_id` int(11) DEFAULT NULL,
   `tbc_content` text DEFAULT NULL,
   PRIMARY KEY (`tbc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `tb_comment` (
 
 LOCK TABLES `tb_comment` WRITE;
 /*!40000 ALTER TABLE `tb_comment` DISABLE KEYS */;
+INSERT INTO `tb_comment` VALUES (1,'2022-11-10 12:50:38',0,NULL,0,23,'post'),(2,'2022-11-10 12:56:35',0,NULL,NULL,23,'test'),(3,'2022-11-10 12:57:57',0,NULL,NULL,23,'okok'),(4,'2022-11-10 12:59:28',0,NULL,NULL,26,'werewr'),(5,'2022-11-10 12:59:33',0,NULL,NULL,26,'Test');
 /*!40000 ALTER TABLE `tb_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +61,7 @@ CREATE TABLE `tb_entry` (
   `tbe_chunk` varchar(100) DEFAULT NULL,
   `tbe_content` longtext DEFAULT NULL,
   PRIMARY KEY (`tbe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +70,7 @@ CREATE TABLE `tb_entry` (
 
 LOCK TABLES `tb_entry` WRITE;
 /*!40000 ALTER TABLE `tb_entry` DISABLE KEYS */;
-INSERT INTO `tb_entry` VALUES (23,'2022-11-10 09:24:08',1,NULL,0,'Title','<p><i><strong>Content</strong></i></p>','<p><i><strong>Content</strong></i></p>');
+INSERT INTO `tb_entry` VALUES (23,'2022-11-10 09:24:08',1,NULL,0,'Title','<p><i><strong>Content</strong></i></p>','<p><i><strong>Content</strong></i></p>'),(24,'2022-11-10 11:41:21',1,NULL,0,'Test 2','<p>Test 2</p>','<p>Test 2</p>'),(25,'2022-11-10 11:41:26',1,NULL,0,'Test 3','<p>Test 3</p>','<p>Test 3</p>'),(26,'2022-11-10 12:59:05',1,NULL,0,'Test Blog 1','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i','<p><i><strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</strong></i></p><p><strong>Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</strong></p><blockquote><p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p></blockquote>');
 /*!40000 ALTER TABLE `tb_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +109,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2022-11-10 09:46:00',1,'admin@mail.com','202cb962ac59075b964b07152d234b70','admin','admin','123','Jakarta','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','kwj6h6aor4rhezad49qcmhjevjo260a42lt5','ADMIN'),(2,'2022-11-10 09:48:56',1,'2022-11-10 09:53:15',2,'test@email.com','202cb962ac59075b964b07152d234b70','test','test',NULL,NULL,NULL,'active',NULL,NULL,'duxnykkuu22vwkqlgd0cym8h8qpfkhucsdrh','ADMIN');
+INSERT INTO `tb_user` VALUES (1,'2019-09-03 15:42:44',0,'2022-11-10 12:58:08',1,'admin@mail.com','202cb962ac59075b964b07152d234b70','admin','admin','123','Jakarta','1981-08-19 00:00:00','active','xycnh1fzl8chkm8cqr20ni6zvh2ai52c3mvw2uwy0s86mscu9u80h6ylym2imghas6h6ffj05taecfoxfu3g0x8alwbt97q9je8f','1111343528-20q4jm5fw1-Cluster-Morizen-Bekasi-Indonesia.jpg','ja1vg9ozc69nzckdxym76mu0110sfsglf7hc','ADMIN'),(2,'2022-11-10 09:48:56',1,'2022-11-10 11:36:05',2,'test@email.com','202cb962ac59075b964b07152d234b70','test','test',NULL,NULL,NULL,'active',NULL,NULL,'q2vgl3wgwg8e5exvz1pu6zsseifrtg4j0gvh','ADMIN');
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,4 +166,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-10 16:54:28
+-- Dump completed on 2022-11-10 20:00:03

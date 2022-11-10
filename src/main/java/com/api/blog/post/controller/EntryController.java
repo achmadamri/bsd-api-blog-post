@@ -23,6 +23,8 @@ import com.api.blog.post.model.post.GetEntryRequestModel;
 import com.api.blog.post.model.post.GetEntryResponseModel;
 import com.api.blog.post.model.post.PostEntryAddRequestModel;
 import com.api.blog.post.model.post.PostEntryAddResponseModel;
+import com.api.blog.post.model.post.PostEntryCommentRequestModel;
+import com.api.blog.post.model.post.PostEntryCommentResponseModel;
 import com.api.blog.post.model.post.PostEntryDeleteRequestModel;
 import com.api.blog.post.model.post.PostEntryDeleteResponseModel;
 import com.api.blog.post.model.post.PostEntryEditRequestModel;
@@ -63,6 +65,26 @@ public class EntryController {
 
 		return responseEntity;
 	}
+
+	@GetMapping("/getentryview")
+	public HttpEntity<?> getEntryView(@RequestParam String tbeTitle, @RequestParam String tbeChunk, @RequestParam String tbeContent, @RequestParam String length, @RequestParam String pageSize, @RequestParam String pageIndex, @RequestParam String email, @RequestParam String token, @RequestParam String requestId, @RequestParam String requestDate) throws Exception {
+		GetEntryListRequestModel requestModel = new GetEntryListRequestModel();
+		requestModel.setEmail(email);
+		requestModel.setToken(token);
+		requestModel.setRequestId(requestId);
+		requestModel.setRequestDate(requestDate);
+
+		String fid = new Uid().generateString(20);
+		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
+
+		GetEntryListResponseModel responseModel = entryService.getEntryView(tbeTitle, tbeChunk, tbeContent, length, pageSize, pageIndex, requestModel);
+
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel,
+				responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
+
+		return responseEntity;
+	}
 	
 	@PostMapping("/postentryadd")
 	@Transactional
@@ -71,6 +93,20 @@ public class EntryController {
 		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
 		
 		PostEntryAddResponseModel responseModel = entryService.postEntryAdd(requestModel);
+		
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("403") ? HttpStatus.FORBIDDEN : (responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND));
+		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
+
+		return responseEntity;
+	}
+	
+	@PostMapping("/postentrycomment")
+	@Transactional
+	public HttpEntity<?> postEntryComment(@Valid @RequestBody PostEntryCommentRequestModel requestModel) throws Exception {
+		String fid = new Uid().generateString(20);
+		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
+		
+		PostEntryCommentResponseModel responseModel = entryService.postEntryComment(requestModel);
 		
 		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("403") ? HttpStatus.FORBIDDEN : (responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND));
 		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
@@ -91,6 +127,26 @@ public class EntryController {
 		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
 		
 		GetEntryResponseModel responseModel = entryService.getEntry(tbeId, requestModel);
+		
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
+
+		return responseEntity;
+	}
+	
+	@GetMapping("/getentrypost")
+	@Transactional
+	public HttpEntity<?> getEntryPost(@RequestParam String tbeId, @RequestParam String email, @RequestParam String token, @RequestParam String requestId, @RequestParam String requestDate) throws Exception {
+		GetEntryRequestModel requestModel = new GetEntryRequestModel();
+		requestModel.setEmail(email);
+		requestModel.setToken(token);
+		requestModel.setRequestId(requestId);
+		requestModel.setRequestDate(requestDate);
+		
+		String fid = new Uid().generateString(20);
+		log.info("[fid:" + fid + "] requestModel : " + objectMapper.writeValueAsString(requestModel));
+		
+		GetEntryResponseModel responseModel = entryService.getEntryPost(tbeId, requestModel);
 		
 		ResponseEntity<?> responseEntity = new ResponseEntity<>(responseModel, responseModel.getStatus().equals("200") ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 		log.info("[fid:" + fid + "] responseEntity : " + objectMapper.writeValueAsString(responseEntity));
